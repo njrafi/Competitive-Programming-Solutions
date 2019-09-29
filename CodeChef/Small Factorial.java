@@ -1,0 +1,21 @@
+
+
+
+import java.math.BigInteger;
+import java.util.Scanner;
+class TestClass {
+    public static void main(String args[] ) throws Exception 
+    {
+       Scanner in = new Scanner(System.in);
+       int t;
+       t = in.nextInt();
+       for(int j=0;j<t;j++)
+       {
+	       BigInteger ans = new BigInteger("1");
+	       BigInteger n = in.nextBigInteger();
+			for(BigInteger i = BigInteger.ONE ; i.compareTo(n) <= 0 ; i = i.add(BigInteger.ONE))
+				ans = ans.multiply(i);
+	        System.out.println(ans);
+       }
+    }
+}
