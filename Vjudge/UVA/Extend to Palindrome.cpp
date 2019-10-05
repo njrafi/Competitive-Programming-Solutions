@@ -1,0 +1,183 @@
+#include <bits/stdc++.h>
+
+#ifndef ONLINE_JUDGE
+    #define gc getchar
+    #define pc putchar
+#else
+    #define gc getchar_unlocked
+    #define pc putchar_unlocked
+#endif
+
+using namespace std;
+
+#define vi vector<int>
+#define si set<int>
+#define vs vector<string>
+#define pii pair<int,int>
+#define vpi vector<pii>
+#define pri priority_queue<int>
+#define rev_pri priority_queue<int,vector<int>,greater<int> >
+#define mpi map<int,int>
+#define i64 long long int
+#define endl '\n'
+#define pi acos(-1)
+#define all(v) v.begin(),v.end()
+#define pb push_back
+#define mp make_pair
+#define mod 1000000007
+#define inf INT_MAX/2
+#define infll LLONG_MAX/3
+#define For(i,n) for(int i=0;i<n;i++)
+#define Fre(i,a,b) for(int i = a; i < b; i++)
+#define sf(n) scanf("%d", &n)
+#define sff(a,b) scanf("%d %d", &a, &b)
+#define sfff(a,b,c) scanf("%d %d %d", &a, &b, &c)
+#define pfn(n) printf("%d\n", n)
+#define pfs(n) printf("%d ", n)
+#define eps 1e-8
+#define ff first
+#define ss second
+#define mem(a,b) memset(a,b,sizeof(a))
+#define READ freopen("in.txt", "r", stdin)
+#define WRITE freopen("out.txt", "w", stdout)
+#define sz size()
+#define dbg(i) printf("yo %d\n", i)
+#define foreach(i,c) for(__typeof((c).begin()) i = (c).begin(); i != (c).end(); i++)
+#define sqr(a) (a) * (a)
+#define clr clear()
+#define CASE(a) printf("Case %d: ",a)
+
+//int dx[] = {0,1,0,-1,1,1,-1,-1};
+//int dy[] = {1,0,-1,0,1,-1,-1,1};
+
+
+//i64 gcd(i64 a,i64 b){if(!b)return a;return gcd(b,a%b);}
+
+//inline void fastRead(int *a){register char c=0;while(c<33)c=gc();*a=0;while(c>33){*a=*a*10+c-'0';c=gc();}}
+
+//inline void fastWrite(int a){char snum[20];int i=0;do{snum[i++]=a%10+48;a=a/10;}while(a!=0);i=i-1;while(i>=0)pc(snum[i--]);pc('\n');}
+
+//i64 bigmod(i64 num,i64 n){if(n==0)return 1;i64 x=bigmod(num,n/2);x=x*x%mod;if(n%2==1)x=x*num%mod;return x;}
+
+//i64 modinverse(i64 num){return bigmod(num,mod-2)%mod;}
+
+//i64 po(i64 a,i64 b){i64 ans=1;while(b--)ans *= a;return ans;}
+
+//i64 ncr(i64 n,i64 r){if(n==r)return 1;if(r==1)return n;if(dp[n][r]!=-1)return dp[n][r];return dp[n][r]=ncr(n-1,r)+ncr(n-1,r-1);}
+
+
+// bit manipulations
+
+//bool checkbit(int mask,int bit){return mask & (1<<bit);}
+
+//int setbit(int mask,int bit){ return mask  (1<<bit) ; }
+
+//int clearbit(int mask,int bit){return mask & ~(1<<bit);}
+
+//int togglebit(int mask,int bit){return mask ^ (1<<bit);}
+
+#define ui64 unsigned long long
+
+namespace hashString
+{
+
+#define pr 163
+#define totstr 3
+#define mxns 100005
+
+vector<ui64> p;
+vector<ui64> h[totstr];
+
+void gen_prime()
+{
+ p.pb(1);
+
+ For(i,mxns)
+ p.pb(p.back() * pr);
+}
+
+void gen(string s,int idx = 0)
+{
+ h[idx].clr;
+ h[idx].pb(0);
+
+ For(i,s.sz)
+ h[idx].pb(h[idx].back()*pr + s[i]);
+}
+
+ui64 hashOfRange(int l,int r,int idx = 0)
+{
+ int len = r-l+1;
+
+ return h[idx][r+1] - h[idx][l] * p[len];
+}
+
+
+
+}
+
+string s;
+
+int f()
+{
+        hashString::gen(s);
+        reverse(all(s));
+        hashString::gen(s,1);
+
+
+        Fre(i,s.sz,2*s.sz)
+        {
+                int r1 = i / 2;
+                int l2 = i / 2;
+                if(i % 2 == 0)
+                        r1--;
+
+                int r2 = s.sz - 1;
+
+                int len = r2 - l2 + 1;
+
+                int l1 = r1 - len + 1;
+
+//                cout << i << " " << l1 << " " << r1 << " " << l2 << " " << r2 << endl;
+
+                if(hashString::hashOfRange(l1,r1) == hashString::hashOfRange(s.sz-1-r2,s.sz-1-l2,1))
+                        return i;
+        }
+}
+
+void print(int ssz)
+{
+        reverse(all(s));
+        while(s.sz!=ssz)
+                s += 'z';
+
+        for(int i = s.sz - 1 , j = 0 ; j < s.sz ; i--,j++)
+                s[i] = s[j];
+
+        cout << s << endl;
+        return;
+
+}
+
+int main()
+{
+        hashString::gen_prime();
+        while(cin >> s)
+        {
+                print(f());
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        return 0;
+}
